@@ -8,16 +8,13 @@ from config import JOINTS
 st.set_page_config(layout="wide")
 st.title("🧠 PoseMate Trainer")
 
-# ---------------- SESSION STATE ----------------
 if "last_feedback" not in st.session_state:
     st.session_state.last_feedback = ""
 if "accuracy" not in st.session_state:
     st.session_state.accuracy = 0
 
-# ---------------- STATE ----------------
 run = st.checkbox("Start Camera")
 
-# ---------------- POSES ----------------
 POSES = {
     "Mountain Pose": {
         "image": "pose.png",
@@ -32,20 +29,17 @@ POSES = {
     }
 }
 
-# ---------------- SELECT POSE ----------------
 pose_name = st.selectbox(
     "Select Pose",
     ["-- Select a Pose --"] + list(POSES.keys())
 )
 
-# ---------------- MEDIAPIPE ----------------
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose()
 
 def get_point(landmarks, index):
     return [landmarks[index].x, landmarks[index].y]
 
-# ---------------- MAIN UI ----------------
 if pose_name != "-- Select a Pose --":
 
     pose_data = POSES[pose_name]
@@ -72,7 +66,6 @@ if pose_name != "-- Select a Pose --":
         accuracy_box = st.empty()
         feedback_box = st.empty()
 
-    # ---------------- CAMERA ----------------
     cap = cv2.VideoCapture(0)
 
     if run:
@@ -82,10 +75,8 @@ if pose_name != "-- Select a Pose --":
                 st.error("Camera not working")
                 break
 
-            # ✅ Fix color
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-            # Mirror view
             image = cv2.flip(image, 1)
 
             results = pose.process(image)
@@ -108,7 +99,6 @@ if pose_name != "-- Select a Pose --":
                     "right_ankle": get_point(lm, 28),
                 }
 
-                # Calculate angles
                 angles = {}
                 for joint, (a, b, c) in JOINTS.items():
                     angles[joint] = calculate_angle(
@@ -119,7 +109,6 @@ if pose_name != "-- Select a Pose --":
 
                 feedback_list = evaluate_pose(angles, landmarks)
 
-                # ✅ Stable feedback
                 if feedback_list:
                     main_feedback = feedback_list[0]
 
@@ -131,7 +120,6 @@ if pose_name != "-- Select a Pose --":
                         else:
                             feedback_box.warning(main_feedback)
 
-                # Accuracy
                 if is_pose_ready(angles, landmarks):
                     accuracy = calculate_accuracy(angles)
 
@@ -141,12 +129,10 @@ if pose_name != "-- Select a Pose --":
                 else:
                     accuracy_box.warning("Get into position")
 
-            # Display camera
             frame_placeholder.image(image, channels="RGB")
 
     cap.release()
 
-    # ---------------- BENEFITS SECTION ----------------
 if pose_name != "-- Select a Pose --":
 
     st.markdown("---")
