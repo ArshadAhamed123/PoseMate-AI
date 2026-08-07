@@ -4,10 +4,8 @@ from config import THRESHOLD_ANGLE, THRESHOLD_ALIGNMENT
 def check_straight(angle):
     return abs(angle - 180) < THRESHOLD_ANGLE
 
-
 def check_arm_vertical(shoulder, wrist):
     return wrist[1] < shoulder[1]
-
 
 def check_body_alignment(shoulder, hip, ankle):
     return (
@@ -15,29 +13,24 @@ def check_body_alignment(shoulder, hip, ankle):
         abs(hip[0] - ankle[0]) < THRESHOLD_ALIGNMENT
     )
 
-
 def evaluate_pose(angles, landmarks):
     feedback = []
 
-    # Arms
     if not check_straight(angles["left_elbow"]):
         feedback.append("Straighten left arm")
     if not check_straight(angles["right_elbow"]):
         feedback.append("Straighten right arm")
 
-    # Knees
     if not check_straight(angles["left_knee"]):
         feedback.append("Straighten left knee")
     if not check_straight(angles["right_knee"]):
         feedback.append("Straighten right knee")
 
-    # Arm vertical
     if not check_arm_vertical(landmarks["left_shoulder"], landmarks["left_wrist"]):
         feedback.append("Raise left arm")
     if not check_arm_vertical(landmarks["right_shoulder"], landmarks["right_wrist"]):
         feedback.append("Raise right arm")
 
-    # Body alignment
     if not check_body_alignment(
         landmarks["left_shoulder"],
         landmarks["left_hip"],
@@ -50,8 +43,6 @@ def evaluate_pose(angles, landmarks):
 
     return feedback
 
-
-# 🔥 Accuracy calculation
 def calculate_accuracy(angles):
     scores = []
 
@@ -61,16 +52,11 @@ def calculate_accuracy(angles):
 
     return int(sum(scores) / len(scores))
 
-
-# 🔥 Pose readiness check (NEW)
 def is_pose_ready(angles, landmarks):
-    # Arms must be raised
     if not check_arm_vertical(landmarks["left_shoulder"], landmarks["left_wrist"]):
         return False
     if not check_arm_vertical(landmarks["right_shoulder"], landmarks["right_wrist"]):
         return False
-
-    # Legs must be straight
     if not check_straight(angles["left_knee"]):
         return False
     if not check_straight(angles["right_knee"]):
