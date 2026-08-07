@@ -25,7 +25,7 @@ PoseMate is an AI-powered yoga pose detection and feedback system that leverages
    Provides visual and voice-based feedback to guide users in correcting their posture during practice.
 
 - **Multilingual Support**
-  - Supports multiple languages for instructions and feedback, making the application accessible to a wider audience.
+   Supports multiple languages for instructions and feedback, making the application accessible to a wider audience.
 
 - **Interactive User Interface**
-  - Built using Streamlit to provide a simple, responsive, and user-friendly experience for home-based yoga practice.
+   Built using Streamlit to provide a simple, responsive, and user-friendly experience for home-based yoga practice.
