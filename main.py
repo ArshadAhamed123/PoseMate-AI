@@ -14,22 +14,17 @@ cap = cv2.VideoCapture(0)
 def get_point(landmarks, index):
     return [landmarks[index].x, landmarks[index].y]
 
-
-# 🔥 UI FUNCTION (FINAL FRONTEND)
 def draw_ui(frame, accuracy, feedback):
     height, width, _ = frame.shape
 
-    # Top bar
     cv2.rectangle(frame, (0, 0), (width, 60), (40, 40, 40), -1)
     cv2.putText(frame, "PoseMate Trainer",
                 (20, 40),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 1, (255, 255, 255), 2)
 
-    # Side panel
     cv2.rectangle(frame, (0, 60), (250, height), (30, 30, 30), -1)
 
-    # Accuracy section
     if accuracy is not None:
         cv2.putText(frame, f"{accuracy}%",
                     (50, 150),
@@ -46,7 +41,6 @@ def draw_ui(frame, accuracy, feedback):
                     cv2.FONT_HERSHEY_SIMPLEX,
                     1, (0, 0, 255), 2)
 
-    # Center feedback
     y = 300
     for f in feedback:
         text_size = cv2.getTextSize(f, cv2.FONT_HERSHEY_SIMPLEX, 0.8, 2)[0]
@@ -79,7 +73,6 @@ while cap.isOpened():
             frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS
         )
 
-        # Landmarks
         landmarks = {
             "left_shoulder": get_point(lm, 11),
             "right_shoulder": get_point(lm, 12),
@@ -95,7 +88,6 @@ while cap.isOpened():
             "right_ankle": get_point(lm, 28),
         }
 
-        # Angles
         angles = {}
         for joint, (a, b, c) in JOINTS.items():
             angles[joint] = calculate_angle(
@@ -104,16 +96,13 @@ while cap.isOpened():
                 get_point(lm, c)
             )
 
-        # Evaluate
         feedback = evaluate_pose(angles, landmarks)
 
-        # Accuracy check
         if is_pose_ready(angles, landmarks):
             accuracy = calculate_accuracy(angles)
         else:
             accuracy = None
 
-        # Draw UI
         draw_ui(frame, accuracy, feedback)
 
     cv2.imshow("PoseMate - Mountain Pose", frame)
