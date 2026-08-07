@@ -6,7 +6,7 @@ PoseMate is an AI-powered yoga pose detection and feedback system that leverages
 </p>
 ## Features
 
-- **MediaPipe-Enhanced Training Dataset**
+- **MediaPipe-Enhanced Training Dataset**:
    Training images are enhanced using MediaPipe skeletal landmarks, enabling the model to focus on body posture while reducing the influence of background noise.
 
 - **Landmark Feature Extraction**
