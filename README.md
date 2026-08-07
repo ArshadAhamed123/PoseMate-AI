@@ -9,19 +9,19 @@ PoseMate is an AI-powered yoga pose detection and feedback system that leverages
 - **MediaPipe-Enhanced Training Dataset**:
    Training images are enhanced using MediaPipe skeletal landmarks, enabling the model to focus on body posture while reducing the influence of background noise.
 
-- **Landmark Feature Extraction**
+- **Landmark Feature Extraction**:
    Extracts 33 body landmarks and their spatial coordinates to generate robust skeletal features for accurate yoga pose recognition.
 
-- **Joint Angle Calculation**
+- **Joint Angle Calculation**:
    Calculates angles between key body joints to evaluate posture alignment and identify deviations from the reference pose.
 
-- **Improved Accuracy and Performance**
+- **Improved Accuracy and Performance**:
    Combines skeletal overlays, landmark features, and joint angle analysis to improve pose classification accuracy, reduce false predictions, and deliver reliable real-time feedback.
 
-- **Real-Time Pose Detection**
+- **Real-Time Pose Detection**:
    Detects and analyzes yoga poses in real time using MediaPipe and Computer Vision techniques.
 
-- **Multimodal Feedback**
+- **Multimodal Feedback**:
    Provides visual and voice-based feedback to guide users in correcting their posture during practice.
 
 - **Multilingual Support**
